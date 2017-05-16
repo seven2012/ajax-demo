@@ -36,7 +36,7 @@
         var page = 1
         btn.onclick = function () {
             var request = new XMLHttpRequest()
-            request.open('get', 'https://github.com/seven2012/ajax-demo/blob/master/page' + page + '.json')
+            request.open('get', 'https://seven2012.github.io/ajax-demo/page' + page + '.json')
             request.onload = function () {
                 page += 1
                 console.log(request.responseText)
