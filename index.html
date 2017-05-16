@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AJAX demo</title>
+    <style>
+        ol {
+            display: flex;
+            justify-content: center;
+            max-width: 1100px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 24px auto;
+            list-style: none;
+            position:fixed;
+            top:30px;
+            left:30px;
+        }
+        
+        img {
+            max-width: 200px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <ol id="pic">
+    </ol>
+    <button id='btn'>Load</button>
+    <script>
+        var page = 1
+        btn.onclick = function () {
+            var request = new XMLHttpRequest()
+            request.open('get', '/page' + page + '.json')
+            request.onload = function () {
+                page += 1
+                console.log(request.responseText)
+
+                let object = JSON.parse(request.responseText)
+                let hasNextPage = object.NextPage
+                if(!hasNextPage){
+                    btn.disabled = true
+                    btn.textContent = 'NoNextPage'
+                }
+                let array = object.items
+                console.log(array)
+                array.forEach(function (item, index) {
+                    console.log(item, index)
+                    let li = document.createElement('li')
+                    let img = document.createElement('img')
+                    li.appendChild(img)
+                    img.src = item.url
+                    pic.appendChild(li)
+                }, this);
+            }
+            request.send()
+            
+        }
+    </script>
+</body>
+
+</html>
